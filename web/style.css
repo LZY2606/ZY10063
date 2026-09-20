@@ -1,0 +1,34 @@
+* { box-sizing: border-box; }
+body { margin: 0; font-family: -apple-system, "PingFang SC", sans-serif; background: #14161a; color: #e6e6e6; }
+header { display: flex; align-items: baseline; gap: 16px; padding: 12px 20px; background: #1d2026; border-bottom: 1px solid #2c313a; }
+h1 { font-size: 18px; margin: 0; }
+h2 { font-size: 14px; margin: 0 0 8px; color: #9fb4d0; }
+h3 { font-size: 13px; margin: 0 0 6px; color: #8a94a6; }
+main { display: flex; gap: 16px; padding: 16px 20px; align-items: flex-start; }
+aside { width: 320px; flex-shrink: 0; display: flex; flex-direction: column; gap: 12px; }
+#workspace { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 12px; }
+.panel { background: #1d2026; border: 1px solid #2c313a; border-radius: 8px; padding: 12px; }
+textarea, input, select { width: 100%; margin-bottom: 6px; background: #12141a; color: #e6e6e6; border: 1px solid #333a46; border-radius: 4px; padding: 6px; font-family: ui-monospace, monospace; font-size: 12px; }
+button { background: #2f6fed; color: #fff; border: 0; border-radius: 4px; padding: 6px 12px; cursor: pointer; font-size: 13px; }
+button:hover { background: #3d7bff; }
+.toolbar { display: flex; gap: 8px; align-items: center; }
+.toolbar select { width: auto; margin: 0; }
+.row { display: flex; gap: 6px; }
+.tracks { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+.track { background: #1d2026; border: 1px solid #2c313a; border-radius: 8px; padding: 10px; overflow: auto; max-height: 480px; }
+table { width: 100%; border-collapse: collapse; font-size: 11px; font-family: ui-monospace, monospace; }
+td, th { border-bottom: 1px solid #262b33; padding: 3px 6px; text-align: left; vertical-align: top; }
+tr.changed td { background: #3a2f14; }
+tr.conflict td { background: #402026; }
+tr.locked td { background: #14301f; }
+#notices { display: flex; flex-direction: column; gap: 4px; }
+.notice { padding: 6px 10px; border-radius: 4px; font-size: 12px; }
+.notice.error { background: #402026; }
+.notice.warn { background: #3a2f14; }
+.notice.info { background: #1d3a5f; }
+pre { background: #12141a; padding: 10px; border-radius: 6px; overflow: auto; max-height: 320px; font-size: 11px; white-space: pre-wrap; }
+ul { margin: 0; padding-left: 18px; font-size: 12px; }
+li { margin-bottom: 2px; }
+#project-list li { cursor: pointer; padding: 4px 6px; border-radius: 4px; list-style: none; }
+#project-list li:hover, #project-list li.active { background: #2c313a; }
+.badge { display: inline-block; padding: 1px 6px; border-radius: 8px; background: #2c313a; font-size: 11px; margin-left: 6px; }

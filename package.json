@@ -1,0 +1,11 @@
+{
+  "name": "subtitle-timeline-workbench",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "单机字幕时间轴修复工作台：SRT/WebVTT/帧号文本导入、锚点求解、三方合并、确定性导出",
+  "scripts": {
+    "test": "node scripts/run-tests.js",
+    "dev": "node server/index.js"
+  }
+}

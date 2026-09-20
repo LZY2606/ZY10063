@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>字幕时间轴工作台</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>字幕时间轴工作台</h1>
+    <span id="project-meta"></span>
+  </header>
+  <main>
+    <aside>
+      <section class="panel">
+        <h2>导入</h2>
+        <select id="import-format">
+          <option value="srt">SRT</option>
+          <option value="vtt">WebVTT</option>
+          <option value="frames">帧号文本</option>
+        </select>
+        <input id="import-fps" type="number" step="0.001" value="25" title="帧号文本默认 fps" />
+        <textarea id="import-content" rows="8" placeholder="粘贴原始字幕内容，原文将原样保存"></textarea>
+        <button id="btn-import">导入为新项目</button>
+      </section>
+      <section class="panel">
+        <h2>项目</h2>
+        <ul id="project-list"></ul>
+      </section>
+    </aside>
+    <section id="workspace" hidden>
+      <div class="toolbar">
+        <button data-action="analyze">分析断点</button>
+        <button data-action="solve">求解</button>
+        <button data-action="finalize">定稿</button>
+        <select id="export-format">
+          <option value="srt">导出 SRT</option>
+          <option value="vtt">导出 WebVTT</option>
+          <option value="frames">导出帧号文本</option>
+        </select>
+        <button data-action="export">导出</button>
+      </div>
+      <div id="notices"></div>
+      <div class="tracks">
+        <div class="track"><h3>原时间轴</h3><table id="track-original"></table></div>
+        <div class="track"><h3>候选方案</h3><table id="track-candidate"></table></div>
+        <div class="track"><h3>差异轨道</h3><table id="track-diff"></table></div>
+      </div>
+      <section class="panel">
+        <h2>锚点（台词 → 帧）</h2>
+        <div class="row">
+          <input id="anchor-cue" placeholder="cue id，如 cue-3" />
+          <input id="anchor-frame" type="number" placeholder="帧号" />
+          <input id="anchor-fps" type="number" step="0.001" value="25" />
+          <button id="btn-add-anchor">添加锚点</button>
+        </div>
+        <ul id="anchor-list"></ul>
+      </section>
+      <section class="panel">
+        <h2>锁段并重解</h2>
+        <div class="row">
+          <input id="lock-cues" placeholder="cue id 列表，逗号分隔" />
+          <button id="btn-lock">锁定并重新求解</button>
+        </div>
+        <ul id="lock-list"></ul>
+      </section>
+      <section class="panel">
+        <h2>合并同事方案</h2>
+        <div class="row">
+          <input id="merge-base" type="number" placeholder="共同祖先版本号，默认 1" />
+        </div>
+        <textarea id="merge-theirs" rows="5" placeholder='粘贴对方 cues JSON（[{id,startMs,endMs,text,...}]）'></textarea>
+        <button id="btn-merge">合并</button>
+        <div id="merge-result"></div>
+      </section>
+      <section class="panel">
+        <h2>导出结果</h2>
+        <pre id="export-content"></pre>
+        <h3>Loss report</h3>
+        <ul id="loss-report"></ul>
+      </section>
+    </section>
+  </main>
+  <script type="module" src="app.js"></script>
+</body>
+</html>

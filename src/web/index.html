@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Subtitle Timeline Workbench</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div>
+        <h1>字幕时间轴修复工作台</h1>
+        <p>原始 cue 永久保留；锚点、伸缩段、冲突诊断和合并均由服务端计算。</p>
+      </div>
+      <span id="health" class="pill">连接中</span>
+    </header>
+
+    <main class="layout">
+      <aside class="panel controls">
+        <section>
+          <h2>1. 导入</h2>
+          <label>标题<input id="title" value="New timeline" /></label>
+          <label>格式
+            <select id="format">
+              <option value="auto">自动识别</option>
+              <option value="srt">SRT</option>
+              <option value="vtt">WebVTT</option>
+              <option value="frames">带帧号文本</option>
+            </select>
+          </label>
+          <label>默认 fps<input id="fps" value="24" /></label>
+          <textarea id="importText" rows="10" placeholder="粘贴 SRT / WebVTT / HH:MM:SS:FF 帧号文本"></textarea>
+          <button id="importBtn">导入并保留原文</button>
+          <button id="sampleBtn" class="secondary">载入示例</button>
+        </section>
+
+        <section>
+          <h2>2. 规则与求解</h2>
+          <label>相邻 cue 最小间隔 ms<input id="gap" type="number" value="30" /></label>
+          <label>说话人切换间隔 ms<input id="speakerGap" type="number" value="80" /></label>
+          <label>每秒字符上限<input id="cps" type="number" value="21" /></label>
+          <label class="inline"><input id="speakerRuns" type="checkbox" checked /> 保持说话人连续性</label>
+          <label>重解基线候选
+            <select id="solveBase">
+              <option value="">原时间轴</option>
+            </select>
+          </label>
+          <label>可伸缩 cue IDs<input id="stretchIds" placeholder="cue-3,cue-4" /></label>
+          <label>锁定 cue IDs<input id="lockedIds" placeholder="锁住一段后重解" /></label>
+          <textarea id="anchors" rows="4" placeholder='[{"cueId":"cue-2","edge":"start","timeMs":1000}]'></textarea>
+          <button id="solveBtn">服务端求候选方案</button>
+        </section>
+
+        <section>
+          <h2>3. 合并 / 导出</h2>
+          <select id="candidateA"></select>
+          <select id="candidateB"></select>
+          <button id="mergeBtn">三方合并两个方案</button>
+          <select id="exportCandidate"></select>
+          <select id="exportFormat">
+            <option value="srt">SRT</option>
+            <option value="vtt">WebVTT</option>
+            <option value="frames">帧号文本</option>
+          </select>
+          <button id="exportBtn">确定性导出 + loss report</button>
+        </section>
+      </aside>
+
+      <section class="panel workspace">
+        <div class="statusline">
+          <div><strong>版本：</strong><span id="version">无项目</span></div>
+          <div><strong>断点：</strong><span id="breakpointCount">0</span></div>
+          <div><strong>诊断：</strong><span id="diagnosticCount">0</span></div>
+        </div>
+
+        <div class="notice" id="conflictNotice" hidden></div>
+
+        <nav class="tabs">
+          <button data-tab="original" class="active">原时间轴</button>
+          <button data-tab="candidates">候选方案</button>
+          <button data-tab="diff">差异轨道</button>
+          <button data-tab="threeway">三方上下文</button>
+          <button data-tab="loss">Loss report</button>
+        </nav>
+
+        <div id="original" class="tab active">
+          <h2>原时间轴与原始块</h2>
+          <div id="breakpoints"></div>
+          <div id="originalRows" class="cue-list"></div>
+        </div>
+
+        <div id="candidates" class="tab">
+          <h2>候选方案</h2>
+          <div id="candidateList"></div>
+        </div>
+
+        <div id="diff" class="tab">
+          <h2>差异轨道</h2>
+          <div id="diffTracks"></div>
+        </div>
+
+        <div id="threeway" class="tab">
+          <h2>合并冲突的三方上下文</h2>
+          <div id="threeWayRows"></div>
+        </div>
+
+        <div id="loss" class="tab">
+          <h2>导出结果与无法写回的信息</h2>
+          <pre id="lossReport">尚未导出。</pre>
+          <pre id="exportContent" class="export"></pre>
+        </div>
+      </section>
+    </main>
+
+    <script type="module" src="/app.js"></script>
+  </body>
+</html>
